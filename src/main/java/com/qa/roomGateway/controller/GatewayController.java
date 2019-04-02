@@ -116,52 +116,64 @@ public class GatewayController {
 	}
 
 	@GetMapping("/getAllTenants")
-	public ResponseEntity<String> getAllTenants(){
-		return this.rtb.build().exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl()+"getAllTenants", 
-				HttpMethod.GET, null, String.class);
+	public ResponseEntity<String> getAllTenants() {
+		return this.rtb.build().exchange(
+				client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "getAllTenants", HttpMethod.GET,
+				null, String.class);
 	}
-	
+
 	@GetMapping("/tenantSearch")
-	public ResponseEntity<String> tenantSearch(){
-		return this.rtb.build().exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl()+"tenantSearch", 
-				HttpMethod.GET, null, String.class);
+	public ResponseEntity<String> tenantSearch() {
+		return this.rtb.build().exchange(
+				client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "tenantSearch", HttpMethod.GET,
+				null, String.class);
 	}
+
 	@GetMapping("/tenantGroupSearch/{groupName}")
-	public ResponseEntity<String> tenantGroupSearch(@PathVariable("groupName")String groupName){
-		return this.rtb.build().exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl()+"tenantGroupSearch/"+groupName, 
+	public ResponseEntity<String> tenantGroupSearch(@PathVariable("groupName") String groupName) {
+		return this.rtb.build().exchange(
+				client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "tenantGroupSearch/" + groupName,
 				HttpMethod.GET, null, String.class);
 	}
 
 	@DeleteMapping("/deleteAllTenants")
 	public String deleteAllTenants() {
-		return this.rtb.build().exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl()+"deleteAllTenants", 
-				HttpMethod.DELETE, null, String.class).getBody();
+		return this.rtb.build()
+				.exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "deleteAllTenants",
+						HttpMethod.DELETE, null, String.class)
+				.getBody();
 	}
-	
+
 	@DeleteMapping("/deleteTenantGroup/{groupName}")
-	public String deleteTenantGroup(@PathVariable("groupName")String groupName) {
-		return this.rtb.build().exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl()+"deleteTenantGroup/"+groupName, 
+	public String deleteTenantGroup(@PathVariable("groupName") String groupName) {
+		return this.rtb.build().exchange(
+				client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "deleteTenantGroup/" + groupName,
 				HttpMethod.DELETE, null, String.class).getBody();
 	}
-	
+
 	@DeleteMapping("/deleteTenant")
 	public String deleteTenant(@RequestBody Object entity) {
-		return this.rtb.build().exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl()+"deleteTenant", 
-				HttpMethod.DELETE, new HttpEntity<Object>(entity), String.class).getBody();
-	}
-	@PutMapping("/updateTenant/{id}")
-	public String updateTenant(@PathVariable("id")String id, @RequestBody Object entity) {
 		return this.rtb.build()
-				.exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "updateTenant/"+id,
+				.exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "deleteTenant",
+						HttpMethod.DELETE, new HttpEntity<Object>(entity), String.class)
+				.getBody();
+	}
+
+	@PutMapping("/updateTenant/{id}")
+	public String updateTenant(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName,
+			@RequestBody Object entity) {
+		return this.rtb.build()
+				.exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "updateTenant/" + firstName+"/"+lastName,
 						HttpMethod.PUT, new HttpEntity<Object>(entity), String.class)
 				.getBody();
 	}
+
 	@PutMapping("/updateTenantGroup/{groupName}")
 	public String updateTenantGroup(@PathVariable("{groupName}") String group, @RequestBody Object entity) {
-		return this.rtb.build()
-				.exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "updateTenantGroup/"+group,
-						HttpMethod.PUT, new HttpEntity<Object>(entity), String.class)
+		return this.rtb
+				.build().exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl()
+						+ "updateTenantGroup/" + group, HttpMethod.PUT, new HttpEntity<Object>(entity), String.class)
 				.getBody();
 	}
-	
+
 }
