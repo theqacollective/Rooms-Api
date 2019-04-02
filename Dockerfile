@@ -1,9 +1,11 @@
-FROM maven:latest as maven-build
+FROM maven as build
 WORKDIR /build
-COPY . /build
+COPY pom.xml .
+RUN mvn verify --fail-never
+COPY . .
 RUN mvn clean package
-FROM java:8
-WORKDIR /opt/website
-EXPOSE 8081
-COPY --from=maven-build /build/target/RoomsGatewayAPI-0.0.1-SNAPSHOT.jar roomapi.jar
-ENTRYPOINT ["java", "-jar", "roomapi.jar"]
+
+FROM openjdk:8
+COPY --from=build /build/target/Rooms-Api-0.0.1-SNAPSHOT.jar  room.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","room.jar"]
