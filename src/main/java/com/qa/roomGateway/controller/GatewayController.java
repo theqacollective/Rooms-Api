@@ -73,6 +73,7 @@ public class GatewayController {
 	}
 
 	// send to microservices
+	// Building
 	@GetMapping("/getAllBuildings")
 	public String getBuildings() {
 		return this.rtb.build()
@@ -138,13 +139,29 @@ public class GatewayController {
 	}
 	
 	@DeleteMapping("/deleteTenantGroup/{groupName}")
-	public String deleteTenantGroup() {
-		return this.rtb.build().exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl()+"deleteTenantGroup", 
+	public String deleteTenantGroup(@PathVariable("groupName")String groupName) {
+		return this.rtb.build().exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl()+"deleteTenantGroup/"+groupName, 
 				HttpMethod.DELETE, null, String.class).getBody();
 	}
 	
-	
-	
-//	"/deleteTenant""/updateTenant/{id}""/updateTenantGroup
+	@DeleteMapping("/deleteTenant")
+	public String deleteTenant(@RequestBody Object entity) {
+		return this.rtb.build().exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl()+"deleteTenant", 
+				HttpMethod.DELETE, new HttpEntity<Object>(entity), String.class).getBody();
+	}
+	@PutMapping("/updateTenant/{id}")
+	public String updateTenant(@PathVariable("id")String id, @RequestBody Object entity) {
+		return this.rtb.build()
+				.exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "updateTenant/"+id,
+						HttpMethod.PUT, new HttpEntity<Object>(entity), String.class)
+				.getBody();
+	}
+	@PutMapping("/updateTenantGroup/{groupName}")
+	public String updateTenantGroup(@PathVariable("{groupName}") String group, @RequestBody Object entity) {
+		return this.rtb.build()
+				.exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "updateTenantGroup/"+group,
+						HttpMethod.PUT, new HttpEntity<Object>(entity), String.class)
+				.getBody();
+	}
 	
 }
