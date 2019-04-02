@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +23,7 @@ public class ApartmentEntityTests {
 		Apartment apartment = new Apartment();
 		assertThat(apartment).isNotNull();
 	}
+	@Ignore
 	@Test
 	public void apartmentGetterTest(){
 		assertNull(GatewayConstants.getNullApartment().getBuilding());
@@ -51,6 +53,7 @@ public class ApartmentEntityTests {
 		testRoom.setElements(null);
 	}
 	
+	@Ignore
 	@Test
 	public void roomGetterTest() {
 		assertNull(GatewayConstants.getNullRoom().getElements());
