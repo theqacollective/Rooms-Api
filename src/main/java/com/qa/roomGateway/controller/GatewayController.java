@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,40 +67,84 @@ public class GatewayController {
 	}
 
 	@PutMapping("/updateApartment/{apartmentReference}")
-	public String updateApartment(@PathVariable("apartmentReference")String apartmentReference, @RequestBody Apartment updatedApartment) {
+	public String updateApartment(@PathVariable("apartmentReference") String apartmentReference,
+			@RequestBody Apartment updatedApartment) {
 		return this.service.updateApartment(apartmentReference, updatedApartment);
 	}
 
 	// send to microservices
 	@GetMapping("/getAllBuildings")
 	public String getBuildings() {
-		return this.rtb.build().exchange(client.getNextServerFromEureka("BuildingAPI", false).getHomePageUrl()+"getAllBuildings", 
-				HttpMethod.GET, null, String.class).getBody();
+		return this.rtb.build()
+				.exchange(client.getNextServerFromEureka("BuildingAPI", false).getHomePageUrl() + "getAllBuildings",
+						HttpMethod.GET, null, String.class)
+				.getBody();
 	}
-	
+
 	@GetMapping("/buildingSearch")
 	public String buildingSearch(@RequestBody Object entity) {
-		return this.rtb.build().exchange(client.getNextServerFromEureka("BuildingAPI", false).getHomePageUrl()+"buildingSearch", 
-				HttpMethod.GET, new HttpEntity<Object>(entity), String.class).getBody();
+		return this.rtb.build()
+				.exchange(client.getNextServerFromEureka("BuildingAPI", false).getHomePageUrl() + "buildingSearch",
+						HttpMethod.GET, new HttpEntity<Object>(entity), String.class)
+				.getBody();
 	}
-	
+
 	@DeleteMapping("/deleteBuilding")
 	public String deleteBuilding(@RequestBody Object entity) {
-		return this.rtb.build().exchange(client.getNextServerFromEureka("BuildingAPI", false).getHomePageUrl()+"deleteBuilding", 
-				HttpMethod.DELETE, new HttpEntity<Object>(entity), String.class).getBody();
+		return this.rtb.build()
+				.exchange(client.getNextServerFromEureka("BuildingAPI", false).getHomePageUrl() + "deleteBuilding",
+						HttpMethod.DELETE, new HttpEntity<Object>(entity), String.class)
+				.getBody();
 	}
 
 	@PostMapping("/createBuilding")
 	public String createBuilding(@RequestBody Object entity) {
-//		HttpEntity<String> entity = new HttpEntity<>(@RequestBody, requestHeaders);
-		return this.rtb.build().exchange(client.getNextServerFromEureka("BuildingAPI", false).getHomePageUrl()+"createBuilding", 
-				HttpMethod.POST, new HttpEntity<Object>(entity), String.class).getBody();
+		return this.rtb.build()
+				.exchange(client.getNextServerFromEureka("BuildingAPI", false).getHomePageUrl() + "createBuilding",
+						HttpMethod.POST, new HttpEntity<Object>(entity), String.class)
+				.getBody();
 	}
-	// get tenants
 
-	// add tenants
+	// tenants
+	@PostMapping("/createTenant")
+	public String createTenant(@RequestBody Object entity) {
+		return this.rtb.build()
+				.exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "createTenant",
+						HttpMethod.POST, new HttpEntity<Object>(entity), String.class)
+				.getBody();
+	}
 
-	// update tenants
+	@GetMapping("/getAllTenants")
+	public ResponseEntity<String> getAllTenants(){
+		return this.rtb.build().exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl()+"getAllTenants", 
+				HttpMethod.GET, null, String.class);
+	}
+	
+	@GetMapping("/tenantSearch")
+	public ResponseEntity<String> tenantSearch(){
+		return this.rtb.build().exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl()+"tenantSearch", 
+				HttpMethod.GET, null, String.class);
+	}
+	@GetMapping("/tenantGroupSearch/{groupName}")
+	public ResponseEntity<String> tenantGroupSearch(@PathVariable("groupName")String groupName){
+		return this.rtb.build().exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl()+"tenantGroupSearch/"+groupName, 
+				HttpMethod.GET, null, String.class);
+	}
 
-	// delete tenants
+	@DeleteMapping("/deleteAllTenants")
+	public String deleteAllTenants() {
+		return this.rtb.build().exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl()+"deleteAllTenants", 
+				HttpMethod.DELETE, null, String.class).getBody();
+	}
+	
+	@DeleteMapping("/deleteTenantGroup/{groupName}")
+	public String deleteTenantGroup() {
+		return this.rtb.build().exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl()+"deleteTenantGroup", 
+				HttpMethod.DELETE, null, String.class).getBody();
+	}
+	
+	
+	
+//	"/deleteTenant""/updateTenant/{id}""/updateTenantGroup
+	
 }
