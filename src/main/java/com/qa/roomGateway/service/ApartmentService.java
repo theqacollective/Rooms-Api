@@ -46,13 +46,13 @@ public class ApartmentService {
 		return "Deleted Successfully";
 	}
 
-//	public String updateApartment(String apartmentReference, Apartment updatedApartment) {
-//		Apartment currentDetails = this.repo.getApartmentByApartmentId(updatedApartment.getApartmentId());
-//		currentDetails.setCurrentState(updatedApartment.getCurrentState());
-//		currentDetails.setLandlord(updatedApartment.getLandlord());
-//		repo.save(currentDetails);
-//		return "{\"message\":\"apartment updated\"}";
-//	}
+	public String updateApartment(String apartmentReference, Apartment updatedApartment) {
+		Apartment currentDetails = this.repo.findById(apartmentReference).orElse(new Apartment());
+		currentDetails.update(updatedApartment);
+		this.repo.save(updatedApartment);
+		this.repo.delete(updatedApartment);
+		return "{\"message\":\"apartment updated\"}";
+	}
 //	public ResponseEntity<List<Apartment>> deleteApartment(Integer apartmentNumber) {
 //		List<Apartment> apartment = repo.delete(repo.findByApartmentNumber(apartmentNumber));
 //		return new ResponseEntity<List<Apartment>>(apartment, HttpStatus.OK);
