@@ -163,7 +163,9 @@ public class GatewayController {
 	public String updateTenant(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName,
 			@RequestBody Object entity) {
 		return this.rtb.build()
-				.exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "updateTenant/" + firstName+"/"+lastName,
+				.exchange(
+						client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "updateTenant/"
+								+ firstName + "/" + lastName,
 						HttpMethod.PUT, new HttpEntity<Object>(entity), String.class)
 				.getBody();
 	}
@@ -176,4 +178,92 @@ public class GatewayController {
 				.getBody();
 	}
 
+	@PostMapping("/createLandlord")
+	public ResponseEntity<String> createLandlord(@RequestBody Object entity) {
+		return this.rtb.build().exchange(
+				client.getNextServerFromEureka("LandlordApi", false).getHomePageUrl() + "createLandlord",
+				HttpMethod.POST, new HttpEntity<Object>(entity), String.class);
+	}
+
+	@GetMapping("/getAllLandlords")
+	public ResponseEntity<String> getAllLandlords() {
+		return this.rtb.build().exchange(
+				client.getNextServerFromEureka("LandlordApi", false).getHomePageUrl() + "getAllLandlords",
+				HttpMethod.GET, null, String.class);
+	}
+
+	@GetMapping("/landlordSearch")
+	public ResponseEntity<String> lanlordSearch() {
+		return this.rtb.build().exchange(
+				client.getNextServerFromEureka("LandlordApi", false).getHomePageUrl() + "landlordSearch",
+				HttpMethod.GET, null, String.class);
+	}
+
+	@DeleteMapping("/deleteLandlord")
+	public String deleteLandlord(@RequestBody Object entity) {
+		return this.rtb.build()
+				.exchange(client.getNextServerFromEureka("LandlordApi", false).getHomePageUrl() + "deleteLandlord",
+						HttpMethod.DELETE, new HttpEntity<Object>(entity), String.class)
+				.getBody();
+	}
+
+	@PutMapping("/updateLandlord/{firstName}/{lastName}")
+	public String updateLandlord(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName,
+			@RequestBody Object entity) {
+		return this.rtb.build()
+				.exchange(
+						client.getNextServerFromEureka("LandlordApi", false).getHomePageUrl() + "updateLandlord/"
+								+ firstName + "/" + lastName,
+						HttpMethod.PUT, new HttpEntity<Object>(entity), String.class)
+				.getBody();
+	}
+
+	@PostMapping("/createMaintenance")
+	public String createMaintenance(@RequestBody Object entity) {
+		return this.rtb.build()
+				.exchange(
+						client.getNextServerFromEureka("MaintinenceApi", false).getHomePageUrl() + "createMaintenance",
+						HttpMethod.POST, new HttpEntity<Object>(entity), String.class)
+				.getBody();
+
+	}
+
+	@GetMapping("/getAllMaintenance")
+	public ResponseEntity<String> getAllMaintenance() {
+		return this.rtb.build().exchange(
+				client.getNextServerFromEureka("MaintinenceApi", false).getHomePageUrl() + "getAllMaintenance",
+				HttpMethod.GET, null, String.class);
+	}
+
+	@GetMapping("/maintenanceSearch")
+	public ResponseEntity<String> maintenanceSearch() {
+		return this.rtb.build().exchange(
+				client.getNextServerFromEureka("MaintinenceApi", false).getHomePageUrl() + "maintenanceSearch",
+				HttpMethod.GET, null, String.class);
+	}
+
+	@DeleteMapping("/deleteAllMaintenance")
+	public String deleteAllMaintenance() {
+		return this.rtb.build().exchange(
+				client.getNextServerFromEureka("MaintinenceApi", false).getHomePageUrl() + "deleteAllMaintenance",
+				HttpMethod.DELETE, null, String.class).getBody();
+	}
+
+	@DeleteMapping("/deleteMaintenance")
+	public String deleteMaintenance(@RequestBody Object entity) {
+		return this.rtb.build()
+				.exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "deleteTenant",
+						HttpMethod.DELETE, new HttpEntity<Object>(entity), String.class)
+				.getBody();
+	}
+
+	@PutMapping("/updateMaintenance/{id}")
+	public String updateMaintenance(@PathVariable("id") String id, @RequestBody Object entity) {
+		return this.rtb.build()
+				.exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "updateTenant/" + id,
+						HttpMethod.PUT, new HttpEntity<Object>(entity), String.class)
+				.getBody();
+	}
+
+//	    ;
 }
