@@ -159,7 +159,7 @@ public class GatewayController {
 				.getBody();
 	}
 
-	@PutMapping("/updateTenant/{id}")
+	@PutMapping("/updateTenant/{firstName}/{lastName}")
 	public String updateTenant(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName,
 			@RequestBody Object entity) {
 		return this.rtb.build()
@@ -199,6 +199,7 @@ public class GatewayController {
 				HttpMethod.GET, null, String.class);
 	}
 
+	
 	@DeleteMapping("/deleteLandlord")
 	public String deleteLandlord(@RequestBody Object entity) {
 		return this.rtb.build()
@@ -265,5 +266,4 @@ public class GatewayController {
 				.getBody();
 	}
 
-//	    ;
 }
