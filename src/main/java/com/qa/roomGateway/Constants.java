@@ -5,7 +5,7 @@ import com.qa.roomGateway.entity.Event;
 import com.qa.roomGateway.entity.Room;
 
 
-public class GatewayConstants {
+public class Constants {
 	private static final String APARTMENT_ID = "TestFirst";
 	private static final String BUILDING = "numberOne";
 	private static final String APARTMENT_NUMBER = "1301";
