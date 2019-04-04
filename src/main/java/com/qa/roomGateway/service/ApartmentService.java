@@ -1,10 +1,15 @@
 package com.qa.roomGateway.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
 import com.qa.roomGateway.entity.Apartment;
+import com.qa.roomGateway.entity.Event;
+import com.qa.roomGateway.entity.Room;
 import com.qa.roomGateway.repository.ApartmentRepo;
 
 @Service
@@ -22,6 +27,10 @@ public class ApartmentService {
 		return "{\"message\":\"apartment added\"}";
 	}
 
+	public Room findRoomByTitle(String title) {
+		return this.repo.findRoomByTitle(title);
+	}
+
 	public List<Apartment> getAllApartments() {
 		return this.repo.findAll();
 	}
@@ -37,24 +46,45 @@ public class ApartmentService {
 	public List<Apartment> getApartmentsByLandlord(String request) {
 		return this.repo.getApartmentsByLandlord(request);
 	}
-	public Apartment getApartmentsByBuildingAndApartmentNumber(String building, String apartmentNumber)
-	{
-		return this.repo.getApartmentsByBuildingAndTitle(building,apartmentNumber);
+
+	public Apartment getApartmentsByBuildingAndApartmentNumber(String building, String apartmentNumber) {
+		return this.repo.getApartmentsByBuildingAndTitle(building, apartmentNumber);
 	}
-	public String deleteApartment(String building, String apartmentNumber){
-		this.repo.delete(repo.getApartmentsByBuildingAndTitle(building,apartmentNumber));
+
+	public String deleteApartment(String building, String apartmentNumber) {
+		this.repo.delete(repo.getApartmentsByBuildingAndTitle(building, apartmentNumber));
 		return "Deleted Successfully";
 	}
 
-	public String updateApartment(String apartmentReference, Apartment updatedApartment) {
-		Apartment currentDetails = this.repo.findById(apartmentReference).orElse(new Apartment());
+	public String updateApartment(String building,String apartmentNumber, Apartment updatedApartment) {
+		Apartment currentDetails = this.repo.getApartmentsByBuildingAndTitle(building,apartmentNumber);
 		currentDetails.update(updatedApartment);
 		this.repo.save(updatedApartment);
 		this.repo.delete(updatedApartment);
-		return "{\"message\":\"apartment updated\"}";
+		return "Apartment Updated";
 	}
-//	public ResponseEntity<List<Apartment>> deleteApartment(Integer apartmentNumber) {
-//		List<Apartment> apartment = repo.delete(repo.findByApartmentNumber(apartmentNumber));
-//		return new ResponseEntity<List<Apartment>>(apartment, HttpStatus.OK);
-//	}
+
+	public String addEvent(String building, String apartmentNumber, String room, Event event) {
+		Apartment newDetails = new Apartment();
+		Apartment currentDetails = this.repo.getApartmentsByBuildingAndTitle(building,apartmentNumber);
+		List<Room> currentRooms = new ArrayList<>();
+		currentRooms.addAll(currentDetails.getTracks());
+		for(int i = 0; i<currentRooms.size();i++)
+		{
+		if(currentRooms.get(i).getTitle().equals(room))
+				{
+					List<Event> newEvents = new ArrayList<>();
+					newEvents.addAll(currentRooms.get(i).getElements());
+					newEvents.add(event);
+					currentRooms.get(i).setElements(new HashSet<Event>(newEvents));
+					newDetails.setTracks(new HashSet<Room>(currentRooms));
+					currentDetails.update(newDetails);
+					this.repo.delete(currentDetails);
+					this.repo.save(currentDetails);
+					return "Event Added";
+				}
+		}
+		
+		return "Error: Invalid Input!";
+	}
 }

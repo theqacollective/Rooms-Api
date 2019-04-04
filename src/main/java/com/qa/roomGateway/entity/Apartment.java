@@ -9,7 +9,7 @@ import org.springframework.data.annotation.Id;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.qa.roomGateway.GatewayConstants;
+import com.qa.roomGateway.Constants;
 
 public class Apartment {
 	@Id
@@ -105,15 +105,15 @@ public class Apartment {
 	}
 	
 	public void update(Apartment updatedApartment) {
-		this.setId(Optional.ofNullable(updatedApartment.getId()).orElse(Optional.ofNullable(this.getId()).orElse(GatewayConstants.getNaString())));
-		this.setBuilding(Optional.ofNullable(updatedApartment.getBuilding()).orElse(Optional.ofNullable(this.getBuilding()).orElse(GatewayConstants.getNaString())));
-		this.setTitle(Optional.ofNullable(updatedApartment.getTitle()).orElse(Optional.ofNullable(this.getTitle()).orElse(GatewayConstants.getNaString())));
+		this.setId(Optional.ofNullable(updatedApartment.getId()).orElse(Optional.ofNullable(this.getId()).orElse(Constants.getNaString())));
+		this.setBuilding(Optional.ofNullable(updatedApartment.getBuilding()).orElse(Optional.ofNullable(this.getBuilding()).orElse(Constants.getNaString())));
+		this.setTitle(Optional.ofNullable(updatedApartment.getTitle()).orElse(Optional.ofNullable(this.getTitle()).orElse(Constants.getNaString())));
 		
 		this.setRoomNumber(Optional.ofNullable(updatedApartment.getRoomNumber()).orElse(Optional.ofNullable(this.getRoomNumber()).orElse(0)));
 		this.setTracks(Optional.ofNullable(updatedApartment.getTracks()).orElse(Optional.ofNullable(this.getTracks()).orElse(null)));
 		
-		this.setCurrentState(Optional.ofNullable(updatedApartment.getCurrentState()).orElse(Optional.ofNullable(this.getCurrentState()).orElse(GatewayConstants.getNaString())));
-		this.setLandlord(Optional.ofNullable(updatedApartment.getLandlord()).orElse(Optional.ofNullable(this.getLandlord()).orElse(GatewayConstants.getNaString())));
+		this.setCurrentState(Optional.ofNullable(updatedApartment.getCurrentState()).orElse(Optional.ofNullable(this.getCurrentState()).orElse(Constants.getNaString())));
+		this.setLandlord(Optional.ofNullable(updatedApartment.getLandlord()).orElse(Optional.ofNullable(this.getLandlord()).orElse(Constants.getNaString())));
 		
 		this.setIsOpen(Optional.ofNullable(updatedApartment.getIsOpen()).orElse(Optional.ofNullable(this.getIsOpen()).orElse(null)));
 		this.setElements(Optional.ofNullable(updatedApartment.getElements()).orElse(Optional.ofNullable(this.getElements()).orElse(null)));

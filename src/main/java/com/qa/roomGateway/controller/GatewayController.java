@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.netflix.discovery.EurekaClient;
 import com.qa.roomGateway.entity.Apartment;
+import com.qa.roomGateway.entity.Event;
 import com.qa.roomGateway.service.ApartmentService;
 
 @CrossOrigin
@@ -60,20 +61,27 @@ public class GatewayController {
 		return service.getApartmentsByLandlord(request);
 	}
 
-	@DeleteMapping("/deleteApartment/{requestString}/{requestInt}")
-	public String deleteApartment(@PathVariable("requestString") String building,
-			@PathVariable("requestInt") String apartmentNumber) {
+	@DeleteMapping("/deleteApartment/{building}/{apartmentNumber}")
+	public String deleteApartment(@PathVariable("building") String building,
+			@PathVariable("apartmentNumber") String apartmentNumber) {
 		return service.deleteApartment(building, apartmentNumber);
 	}
 
-	@PutMapping("/updateApartment/{apartmentReference}")
-	public String updateApartment(@PathVariable("apartmentReference") String apartmentReference,
-			@RequestBody Apartment updatedApartment) {
-		return this.service.updateApartment(apartmentReference, updatedApartment);
+	@PutMapping("/updateApartment/{building}/{apartmentNumber}")
+	public String updateApartment(@PathVariable("apartmentNumber") String apartmentNumber,
+			@RequestBody Apartment updatedApartment, @PathVariable("building") String building) {
+		return this.service.updateApartment(building,apartmentNumber, updatedApartment);
 	}
-
-	// send to microservices
-	// Building
+	@PutMapping("/addEvent/{building}/{apartmentNumber}/{room}")
+	public String addEvent(
+			@PathVariable("building") String building, @PathVariable("apartmentNumber") String apartmentNumber, 
+			@RequestBody Event event,@PathVariable("room") String roomTitle)
+	{
+		return this.service.addEvent(building, apartmentNumber, roomTitle, event);
+	}
+	
+	//	Micro-Service Connections
+	// 	Building
 	@GetMapping("/getAllBuildings")
 	public String getBuildings() {
 		return this.rtb.build()

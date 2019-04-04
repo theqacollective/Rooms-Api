@@ -41,7 +41,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.qa.roomGateway.GatewayConstants;
+import com.qa.roomGateway.Constants;
 import com.qa.roomGateway.controller.GatewayController;
 import com.qa.roomGateway.entity.Apartment;
 import com.qa.roomGateway.service.ApartmentService;
@@ -71,8 +71,8 @@ public class ApartmentGatewayTests {
 
 	@Before
 	public void setUp() throws JsonProcessingException {
-		roomList.add(GatewayConstants.getConstructedApartment());
-		testApartment = GatewayConstants.getConstructedApartment();
+		roomList.add(Constants.getConstructedApartment());
+		testApartment = Constants.getConstructedApartment();
 		OBJECT_MAPPER.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
 		ow = OBJECT_MAPPER.writer().withDefaultPrettyPrinter();
 		postContent= ow.writeValueAsString(testApartment);
@@ -99,7 +99,7 @@ public class ApartmentGatewayTests {
 
 	@Test
 	public void getApartmentsByNumberTest() throws Exception {
-		roomList.add(GatewayConstants.getConstructedApartment());
+		roomList.add(Constants.getConstructedApartment());
 		when(service.getApartmentsByNumber("0")).thenReturn(roomList);
 		assertThat(mvc.perform(get("/getApartmentByNumber/").param("request", "1301").accept(MediaType.APPLICATION_JSON))
 				.andExpect(content().string("")));
@@ -107,7 +107,7 @@ public class ApartmentGatewayTests {
 
 	@Test
 	public void getApartmentByBuildingTest() throws Exception {
-		roomList.add(GatewayConstants.getConstructedApartment());
+		roomList.add(Constants.getConstructedApartment());
 		when(service.getApartmentsByBuilding("numberOne")).thenReturn(roomList);
 		assertThat(
 				mvc.perform(get("/getApartmentByBuilding/").param("request", "numberOne").accept(MediaType.APPLICATION_JSON))
@@ -116,7 +116,7 @@ public class ApartmentGatewayTests {
 
 	@Test
 	public void getApartmentByLandlordTest() throws Exception {
-		roomList.add(GatewayConstants.getConstructedApartment());
+		roomList.add(Constants.getConstructedApartment());
 		when(service.getApartmentsByLandlord("Jason Joans")).thenReturn(roomList);
 		assertThat(mvc
 				.perform(get("/getApartmentByLandlord/").param("request", "Jason Joans").accept(MediaType.APPLICATION_JSON))
