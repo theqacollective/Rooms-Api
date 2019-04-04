@@ -19,7 +19,7 @@ import com.netflix.discovery.EurekaClient;
 import com.qa.roomGateway.entity.Apartment;
 import com.qa.roomGateway.service.ApartmentService;
 
-@CrossOrigin(origins = "localhost:3000")
+@CrossOrigin
 @RestController
 public class GatewayController {
 
