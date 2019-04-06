@@ -3,8 +3,8 @@ package com.qa.roomGateway.service;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 import com.qa.roomGateway.entity.Apartment;
@@ -24,7 +24,7 @@ public class ApartmentService {
 	public String addApartment(Apartment apartment) {
 		System.out.println(apartment.getTracks());
 		repo.save(apartment);
-		return "{\"message\":\"apartment added\"}";
+		return "Apartment Added";
 	}
 
 	public Room findRoomByTitle(String title) {
@@ -56,35 +56,46 @@ public class ApartmentService {
 		return "Deleted Successfully";
 	}
 
-	public String updateApartment(String building,String apartmentNumber, Apartment updatedApartment) {
-		Apartment currentDetails = this.repo.getApartmentsByBuildingAndTitle(building,apartmentNumber);
+	public String updateApartment(String building, String apartmentNumber, Apartment updatedApartment) {
+		Apartment currentDetails = this.repo.getApartmentsByBuildingAndTitle(building, apartmentNumber);
 		currentDetails.update(updatedApartment);
 		this.repo.save(updatedApartment);
 		this.repo.delete(updatedApartment);
 		return "Apartment Updated";
 	}
 
-	public String addEvent(String building, String apartmentNumber, String room, Event event) {
+	public String addRoom(String building, String apartmentNumber, Room room) {
 		Apartment newDetails = new Apartment();
-		Apartment currentDetails = this.repo.getApartmentsByBuildingAndTitle(building,apartmentNumber);
+		Apartment currentDetails = this.repo.getApartmentsByBuildingAndTitle(building, apartmentNumber);
 		List<Room> currentRooms = new ArrayList<>();
 		currentRooms.addAll(currentDetails.getTracks());
-		for(int i = 0; i<currentRooms.size();i++)
-		{
-		if(currentRooms.get(i).getTitle().equals(room))
-				{
-					List<Event> newEvents = new ArrayList<>();
-					newEvents.addAll(currentRooms.get(i).getElements());
-					newEvents.add(event);
-					currentRooms.get(i).setElements(new HashSet<Event>(newEvents));
-					newDetails.setTracks(new HashSet<Room>(currentRooms));
-					currentDetails.update(newDetails);
-					this.repo.delete(currentDetails);
-					this.repo.save(currentDetails);
-					return "Event Added";
-				}
+		currentRooms.add(room);
+		newDetails.setTracks(new HashSet<Room>(currentRooms));
+		currentDetails.update(newDetails);
+		this.repo.delete(currentDetails);
+		this.repo.save(currentDetails);
+		return "Room Updated";
+
+	}
+
+	public String addEvent(String building, String apartmentNumber, String room, Event event) {
+		Apartment newDetails = new Apartment();
+		Apartment currentDetails = this.repo.getApartmentsByBuildingAndTitle(building, apartmentNumber);
+		List<Room> currentRooms = new ArrayList<>();
+		currentRooms.addAll(currentDetails.getTracks());
+		for (int i = 0; i < currentRooms.size(); i++) {
+			if (currentRooms.get(i).getTitle().equals(room)) {
+				List<Event> newEvents = new ArrayList<>();
+				newEvents.addAll(currentRooms.get(i).getElements());
+				newEvents.add(event);
+				currentRooms.get(i).setElements(new HashSet<Event>(newEvents));
+				newDetails.setTracks(new HashSet<Room>(currentRooms));
+				currentDetails.update(newDetails);
+				this.repo.delete(currentDetails);
+				this.repo.save(currentDetails);
+				return "Event Added";
+			}
 		}
-		
 		return "Error: Invalid Input!";
 	}
 }

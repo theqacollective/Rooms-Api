@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.netflix.discovery.EurekaClient;
 import com.qa.roomGateway.entity.Apartment;
 import com.qa.roomGateway.entity.Event;
+import com.qa.roomGateway.entity.Room;
 import com.qa.roomGateway.service.ApartmentService;
 
 @CrossOrigin
@@ -79,7 +80,13 @@ public class GatewayController {
 	{
 		return this.service.addEvent(building, apartmentNumber, roomTitle, event);
 	}
-	
+	@PutMapping("/addRoom/{building}/{apartmentNumber}")
+	public String addRoom(
+			@PathVariable("building") String building,
+			@PathVariable("apartmentNumber") String apartmentNumber,
+			@RequestBody Room room) {
+		return this.service.addRoom(building, apartmentNumber, room);
+	}
 	//	Micro-Service Connections
 	// 	Building
 	@GetMapping("/getAllBuildings")
