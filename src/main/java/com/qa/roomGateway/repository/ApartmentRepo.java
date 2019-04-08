@@ -16,9 +16,9 @@ public interface ApartmentRepo extends MongoRepository<Apartment, String> {
 
 	public Room findRoomByTitle(String title);
 
-	public List<Apartment> getApartmentsByLandlord(String request);
+	public List<Apartment> getApartmentsByLandlord(String landlord);
 
-	public List<Apartment> getApartmentsByLandlord();
+	public List<Apartment> getApartmentsByCurrentState(String currentState);
 
 	public Apartment getApartmentsByBuildingAndTitle(String building, String title);
 

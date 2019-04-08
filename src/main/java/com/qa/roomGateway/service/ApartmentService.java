@@ -46,6 +46,10 @@ public class ApartmentService {
 	public List<Apartment> getApartmentsByLandlord(String request) {
 		return this.repo.getApartmentsByLandlord(request);
 	}
+	public List<Apartment> getApartmentsByCurrentState(String currentState)
+	{
+		return this.repo.getApartmentsByCurrentState(currentState);
+	}
 
 	public Apartment getApartmentsByBuildingAndApartmentNumber(String building, String apartmentNumber) {
 		return this.repo.getApartmentsByBuildingAndTitle(building, apartmentNumber);

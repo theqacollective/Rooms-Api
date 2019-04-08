@@ -57,9 +57,13 @@ public class GatewayController {
 		return service.getApartmentsByBuilding(request);
 	}
 
-	@GetMapping("/getApartmentByLandlord/{request}")
-	public List<Apartment> getApartmentsByLandlord(@PathVariable("request") String request) {
-		return service.getApartmentsByLandlord(request);
+	@GetMapping("/getApartmentByLandlord/{landlord}")
+	public List<Apartment> getApartmentsByLandlord(@PathVariable("landlord") String landlord) {
+		return service.getApartmentsByLandlord(landlord);
+	}
+	@GetMapping("/getAparmentsByCurrentState/{currentState}")
+	public List<Apartment> getApartmentsByCurrentState(@PathVariable("currentState") String currentState){
+		return service.getApartmentsByCurrentState(currentState);
 	}
 
 	@DeleteMapping("/deleteApartment/{building}/{apartmentNumber}")
@@ -144,10 +148,22 @@ public class GatewayController {
 				null, String.class);
 	}
 
-	@GetMapping("/tenantGroupSearch/{groupName}")
-	public ResponseEntity<String> tenantGroupSearch(@PathVariable("groupName") String groupName) {
+	@GetMapping("/findTenantByFirstName/{firstName}")
+	public ResponseEntity<String> findTenantByFirstName(@PathVariable("firstName") String firstName) {
 		return this.rtb.build().exchange(
-				client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "tenantGroupSearch/" + groupName,
+				client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "findTenantByFirstName/" + firstName,
+				HttpMethod.GET, null, String.class);
+	}
+	@GetMapping("/findTenantByLastName/{lastName}")
+	public ResponseEntity<String> findTenantByLastName(@PathVariable("lastName") String lastName) {
+		return this.rtb.build().exchange(
+				client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "findTenantByLastName/" + lastName,
+				HttpMethod.GET, null, String.class);
+	}
+	@GetMapping("/findTenantByGroupName/{groupName}")
+	public ResponseEntity<String> findTenantByGroupName(@PathVariable("groupName") String groupName) {
+		return this.rtb.build().exchange(
+				client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "findTenantByGroupName/" + groupName,
 				HttpMethod.GET, null, String.class);
 	}
 
