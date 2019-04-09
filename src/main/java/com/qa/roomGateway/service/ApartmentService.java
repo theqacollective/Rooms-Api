@@ -22,7 +22,9 @@ public class ApartmentService {
 	private ApartmentRepo repo;
 
 	public String addApartment(Apartment apartment) {
-		System.out.println(apartment.getTracks());
+		if (this.repo.getApartmentsByBuildingAndTitle(apartment.getBuilding(), apartment.getTitle()) != null) {
+			return "Apartment Already Exists";
+		}
 		repo.save(apartment);
 		return "Apartment Added";
 	}
@@ -46,8 +48,8 @@ public class ApartmentService {
 	public List<Apartment> getApartmentsByLandlord(String request) {
 		return this.repo.getApartmentsByLandlord(request);
 	}
-	public List<Apartment> getApartmentsByCurrentState(String currentState)
-	{
+
+	public List<Apartment> getApartmentsByCurrentState(String currentState) {
 		return this.repo.getApartmentsByCurrentState(currentState);
 	}
 
@@ -56,8 +58,7 @@ public class ApartmentService {
 	}
 
 	public String deleteApartment(String building, String apartmentNumber) {
-		if(repo.getApartmentsByBuildingAndTitle(building, apartmentNumber) == null)
-		{
+		if (repo.getApartmentsByBuildingAndTitle(building, apartmentNumber) == null) {
 			return "Requested Apartment Does Not Exist";
 		}
 		this.repo.delete(repo.getApartmentsByBuildingAndTitle(building, apartmentNumber));
@@ -86,6 +87,35 @@ public class ApartmentService {
 
 	}
 
+	public String deleteEvent(String building, String apartmentNumber, String room, String title) {
+		Apartment newDetails = new Apartment();
+		Apartment currentDetails = this.repo.getApartmentsByBuildingAndTitle(building, apartmentNumber);
+		List<Room> currentRooms = new ArrayList<>();
+		currentRooms.addAll(currentDetails.getTracks());
+		for (int i = 0; i < currentRooms.size(); i++) {
+			if (currentRooms.get(i).getTitle().equals(room)) {
+				List<Event> newEvents = new ArrayList<>();
+				List<Event> removedEventList = new ArrayList<>();
+				newEvents.addAll(currentRooms.get(i).getElements());
+				for (int j = 0; j < newEvents.size(); j++) {
+					if (newEvents.get(j).getTitle().equals(title)) {
+						j++;
+					} else {
+						removedEventList.add(newEvents.get(j));
+					}
+
+				}
+				currentRooms.get(i).setElements(new HashSet<Event>(removedEventList));
+				newDetails.setTracks(new HashSet<Room>(currentRooms));
+				currentDetails.update(newDetails);
+				this.repo.delete(currentDetails);
+				this.repo.save(currentDetails);
+				return "Assignment Deleted";
+			}
+		}
+		return "Error: Invalid Input!";
+	}
+
 	public String addEvent(String building, String apartmentNumber, String room, Event event) {
 		Apartment newDetails = new Apartment();
 		Apartment currentDetails = this.repo.getApartmentsByBuildingAndTitle(building, apartmentNumber);
@@ -101,7 +131,7 @@ public class ApartmentService {
 				currentDetails.update(newDetails);
 				this.repo.delete(currentDetails);
 				this.repo.save(currentDetails);
-				return "Event Added";
+				return "Asssignment Added";
 			}
 		}
 		return "Error: Invalid Input!";

@@ -15,7 +15,7 @@ public class Apartment {
 	@Id
 	private String id;
 	private String building;
-	private boolean isIsOpen = true;
+	private boolean isIsOpen = false;
 	private String title;
 	private Set<Event> elements = new HashSet<>();
 	private Integer roomNumber;

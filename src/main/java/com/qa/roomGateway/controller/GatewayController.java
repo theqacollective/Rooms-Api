@@ -86,6 +86,12 @@ public class GatewayController {
 		return this.service.addEvent(building, apartmentNumber, roomTitle, event);
 	}
 
+	@DeleteMapping("/deleteEvent/{building}/{apartmentNumber}/{room}/{title}")
+	public String deleteEvent(@PathVariable("building") String building,
+			@PathVariable("apartmentNumber") String apartmentNumber, @PathVariable("title") String title,
+			@PathVariable("room") String roomTitle) {
+		return this.service.deleteEvent(building, apartmentNumber, roomTitle, title);
+	}
 	@PutMapping("/addRoom/{building}/{apartmentNumber}")
 	public String addRoom(@PathVariable("building") String building,
 			@PathVariable("apartmentNumber") String apartmentNumber, @RequestBody Room room) {
