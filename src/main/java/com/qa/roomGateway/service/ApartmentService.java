@@ -56,6 +56,10 @@ public class ApartmentService {
 	}
 
 	public String deleteApartment(String building, String apartmentNumber) {
+		if(repo.getApartmentsByBuildingAndTitle(building, apartmentNumber) == null)
+		{
+			return "Requested Apartment Does Not Exist";
+		}
 		this.repo.delete(repo.getApartmentsByBuildingAndTitle(building, apartmentNumber));
 		return "Deleted Successfully";
 	}

@@ -61,8 +61,9 @@ public class GatewayController {
 	public List<Apartment> getApartmentsByLandlord(@PathVariable("landlord") String landlord) {
 		return service.getApartmentsByLandlord(landlord);
 	}
+
 	@GetMapping("/getAparmentsByCurrentState/{currentState}")
-	public List<Apartment> getApartmentsByCurrentState(@PathVariable("currentState") String currentState){
+	public List<Apartment> getApartmentsByCurrentState(@PathVariable("currentState") String currentState) {
 		return service.getApartmentsByCurrentState(currentState);
 	}
 
@@ -75,24 +76,24 @@ public class GatewayController {
 	@PutMapping("/updateApartment/{building}/{apartmentNumber}")
 	public String updateApartment(@PathVariable("apartmentNumber") String apartmentNumber,
 			@RequestBody Apartment updatedApartment, @PathVariable("building") String building) {
-		return this.service.updateApartment(building,apartmentNumber, updatedApartment);
+		return this.service.updateApartment(building, apartmentNumber, updatedApartment);
 	}
+
 	@PutMapping("/addEvent/{building}/{apartmentNumber}/{room}")
-	public String addEvent(
-			@PathVariable("building") String building, @PathVariable("apartmentNumber") String apartmentNumber, 
-			@RequestBody Event event,@PathVariable("room") String roomTitle)
-	{
+	public String addEvent(@PathVariable("building") String building,
+			@PathVariable("apartmentNumber") String apartmentNumber, @RequestBody Event event,
+			@PathVariable("room") String roomTitle) {
 		return this.service.addEvent(building, apartmentNumber, roomTitle, event);
 	}
+
 	@PutMapping("/addRoom/{building}/{apartmentNumber}")
-	public String addRoom(
-			@PathVariable("building") String building,
-			@PathVariable("apartmentNumber") String apartmentNumber,
-			@RequestBody Room room) {
+	public String addRoom(@PathVariable("building") String building,
+			@PathVariable("apartmentNumber") String apartmentNumber, @RequestBody Room room) {
 		return this.service.addRoom(building, apartmentNumber, room);
 	}
-	//	Micro-Service Connections
-	// 	Building
+
+	// Micro-Service Connections
+	// Building
 	@GetMapping("/getAllBuildings")
 	public String getBuildings() {
 		return this.rtb.build()
@@ -150,21 +151,20 @@ public class GatewayController {
 
 	@GetMapping("/findTenantByFirstName/{firstName}")
 	public ResponseEntity<String> findTenantByFirstName(@PathVariable("firstName") String firstName) {
-		return this.rtb.build().exchange(
-				client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "findTenantByFirstName/" + firstName,
-				HttpMethod.GET, null, String.class);
+		return this.rtb.build().exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl()
+				+ "findTenantByFirstName/" + firstName, HttpMethod.GET, null, String.class);
 	}
+
 	@GetMapping("/findTenantByLastName/{lastName}")
 	public ResponseEntity<String> findTenantByLastName(@PathVariable("lastName") String lastName) {
-		return this.rtb.build().exchange(
-				client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "findTenantByLastName/" + lastName,
-				HttpMethod.GET, null, String.class);
+		return this.rtb.build().exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl()
+				+ "findTenantByLastName/" + lastName, HttpMethod.GET, null, String.class);
 	}
+
 	@GetMapping("/findTenantByGroupName/{groupName}")
 	public ResponseEntity<String> findTenantByGroupName(@PathVariable("groupName") String groupName) {
-		return this.rtb.build().exchange(
-				client.getNextServerFromEureka("TenantApi", false).getHomePageUrl() + "findTenantByGroupName/" + groupName,
-				HttpMethod.GET, null, String.class);
+		return this.rtb.build().exchange(client.getNextServerFromEureka("TenantApi", false).getHomePageUrl()
+				+ "findTenantByGroupName/" + groupName, HttpMethod.GET, null, String.class);
 	}
 
 	@DeleteMapping("/deleteAllTenants")
@@ -230,12 +230,12 @@ public class GatewayController {
 				HttpMethod.GET, null, String.class);
 	}
 
-	
-	@DeleteMapping("/deleteLandlord")
-	public String deleteLandlord(@RequestBody Object entity) {
-		return this.rtb.build()
-				.exchange(client.getNextServerFromEureka("LandlordApi", false).getHomePageUrl() + "deleteLandlord",
-						HttpMethod.DELETE, new HttpEntity<Object>(entity), String.class)
+	@DeleteMapping("/deleteLandlord/{firstName}/{lastName}")
+	public String deleteLandlord(@PathVariable("firstName") String firstName,
+			@PathVariable("lastName") String lastName) {
+		return this.rtb
+				.build().exchange(client.getNextServerFromEureka("LandlordApi", false).getHomePageUrl()
+						+ "deleteLandlord/" + firstName + "/" + lastName, HttpMethod.DELETE, null, String.class)
 				.getBody();
 	}
 
