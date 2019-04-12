@@ -16,14 +16,14 @@ This is the package for the Entity layer of the application, Contained Files:
 	|currentState|A variable used to track the current cleanliness level of a room|
 	|landlord|The name of the Landlord responsible for the apartment|
 	
-- Room.java
+- ## Room.java
 The entity class for each individual room, which are embedded as a list in the Apartment class:
 
 	|Variable| Coverage|
 	|:---:|:---:|
 	|title| Primarily set to "Room x" by the Front End, designed to denote the name of each room|
 	|elements| Similar to the Apartment variable of the same name, this column contains the tenant assignments relevant to the room|
-- Event.java
+- ## Event.java
 The entity class for the events, used to denote the room assignments. Called as such for ease of use in the Front End.
 
 	|Variable|Coverage|
