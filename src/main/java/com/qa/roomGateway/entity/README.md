@@ -4,6 +4,7 @@
 This is the package for the Entity layer of the application, Contained Files:
 - ## Apartment.java
 	The main class containing all pertinent information for the apartment entity and subsequent column properties.
+	
 	|Variable|Coverage|
 	|:---:|:---:|
 	|building|Defines the building to which the apartment belongs|
