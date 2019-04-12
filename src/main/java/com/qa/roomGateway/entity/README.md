@@ -19,18 +19,19 @@ This is the package for the Entity layer of the application, Contained Files:
 - ## Room.java
 The entity class for each individual room, which are embedded as a list in the Apartment class:
 
-	|Variable| Coverage|
-	|:---:|:---:|
-	|title| Primarily set to "Room x" by the Front End, designed to denote the name of each room|
-	|elements| Similar to the Apartment variable of the same name, this column contains the tenant assignments relevant to the room|
+|Variable| Coverage|
+|:---:|:---:|
+|title| Primarily set to "Room x" by the Front End, designed to denote the name of each room|
+|elements| Similar to the Apartment variable of the same name, this column contains the tenant assignments relevant to the room|
+
 - ## Event.java
 The entity class for the events, used to denote the room assignments. Called as such for ease of use in the Front End.
 
-	|Variable|Coverage|
-	|:---:|:---:|
-	|title| The name of the tenant being assigned, once again named for Front End use|
-	|start|Beginning date for tenancy|
-	|end|Last date of tenancy|
+|Variable|Coverage|
+|:---:|:---:|
+|title| The name of the tenant being assigned, once again named for Front End use|
+|start|Beginning date for tenancy|
+|end|Last date of tenancy|
 		
 - #### **Example**
 	Structure of singular apartment entity:
