@@ -10,7 +10,7 @@ This package contains the server setup information required for setup of the emb
     |`spring.application.name=GatewayApi`|Sets the name of the application, for use in conjunction with the eureka discovery service|
     |`spring.data.mongodb.host=localhost`|Denotes the "ip" address the database is located on, in this case localhost represents `127.0.0.1`|
     |`spring.data.mongodb.port=27017`|Determines which port the service will attempt to connect to in order to establish connection with the database|
-    |`spring.data.mongodb.database=ApartmentManager|Sets the name of the database to create for the application within the mongoDB system|
+    |`spring.data.mongodb.database=ApartmentManager`|Sets the name of the database to create for the application within the mongoDB system|
     
   - ### data.sql
     This file is a leftover from a previous iteration of the system, which was designed to run with SQL. Has not been removed for posterity's sake.
