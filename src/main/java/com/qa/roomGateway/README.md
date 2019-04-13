@@ -1,5 +1,4 @@
 # RoomGateway Package
-# Rooms-Api
 This folder is the container for the java code required to run the project below is an over view of the contents;
 
 - ## Constants.java
