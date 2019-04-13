@@ -21,30 +21,31 @@ This is the package for the Controller layer of the application, Contained Files
 
 	- The next section is dedicated to the micro-service links:
 	
-|API|Mapping|Function|
-|:---:|:---:|:---:|
-|Building|GET|getBuildings|
-|Building|GET|buildingSearch|
-|Building|DELETE|deleteBuilding|
-|Building|POST|createBuilding|
-|Tenant|POST|createTenant|
-|Tenant|GET|getAllTenants|
-|Tenant|GET|tenantSearch|
-|Tenant|GET|findTenantByFirstName|
-|Tenant|GET|findTenantByLastName|
-|Tenant|GET|findTenantByGroupName|
-|Tenant|DELETE|deleteAllTenants|
-|Tenant|DELETE|deleteTenantGroup|
-|Tenant|DELETE|deleteTenant|
-|Tenant|PUT|updateTenant|
-|Tenant|PUT|updateTenantGroup|
-|Landlord|POST|createLandlord|
-|Landlord|GET|getAllLandlords|
-|Landlord|GET|landlordSearch|
-|Landlord|DELETE|deleteLandlord|
-|Landlord|PUT|updateLandlord|
-|Maintenance|POST|createMaintenance|
-|Maintenance|GET|getAllMaintenance|
-|Maintenance|GET|maintenanceSearch|
-|Maintenance|DELETE|deleteMaintenance|
-|Maintenance|PUT|updateMaintenance|
+	|API|Mapping|Function|
+	|:---:|:---:|:---:|
+	|Building|GET|getBuildings|
+	|Building|GET|buildingSearch|
+	|Building|DELETE|deleteBuilding|
+	|Building|POST|createBuilding|
+	|Tenant|POST|createTenant|
+	|Tenant|GET|getAllTenants|
+	|Tenant|GET|tenantSearch|
+	|Tenant|GET|findTenantByFirstName|
+	|Tenant|GET|findTenantByLastName|
+	|Tenant|GET|findTenantByGroupName|
+	|Tenant|DELETE|deleteAllTenants|
+	|Tenant|DELETE|deleteTenantGroup|
+	|Tenant|DELETE|deleteTenant|
+	|Tenant|PUT|updateTenant|
+	|Tenant|PUT|updateTenantGroup|
+	|Landlord|POST|createLandlord|
+	|Landlord|GET|getAllLandlords|
+	|Landlord|GET|landlordSearch|
+	|Landlord|DELETE|deleteLandlord|
+	|Landlord|PUT|updateLandlord|
+	|Maintenance|POST|createMaintenance|
+	|Maintenance|GET|getAllMaintenance|
+	|Maintenance|GET|maintenanceSearch|
+	|Maintenance|DELETE|deleteMaintenance|
+	|Maintenance|PUT|updateMaintenance|
+	
