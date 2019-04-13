@@ -20,7 +20,7 @@ This is the package for the Controller layer of the application, Contained Files
 	|PUT|addRoom|Creates a room and attaches it to the specified apartment, selected by **building** and **apartmentNumber**|
 
 	- The next section is dedicated to the micro-service links:
-	- 
+	
 |API|Mapping|Function|
 |:---:|:---:|:---:|
 |Building|GET|getBuildings|
