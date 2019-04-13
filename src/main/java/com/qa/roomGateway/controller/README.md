@@ -4,6 +4,7 @@
 This is the package for the Controller layer of the application, Contained Files:
 - ## Controller.java
 	This file is the endpoint for the application, as this repository acts as the gateway API for the apartment management system there are references to the different APIs that connect to this one.
+	
 	|Mapping |Function|Purpose|
 	|:---:|:---:|:---:|
 	|POST|addApartment|Creates an apartment, calls to the service layer|
